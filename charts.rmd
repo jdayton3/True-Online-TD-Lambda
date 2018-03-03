@@ -1,0 +1,34 @@
+---
+title: "TD Lambda"
+author: "Jonathan Dayton"
+date: "March 2, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load libraries
+
+```{r}
+library(tidyverse)
+```
+
+## Load data
+
+```{r}
+df <- read_csv("./mse.csv", col_types = "icdd")
+```
+
+## Manipulate data
+
+```{r}
+df <- df %>% group_by(lambda, learning_rate) %>% summarize(mmse = mean(mse))
+```
+
+## Plot it
+
+```{r}
+df %>% ggplot(aes(x=learning_rate, y=mmse, color=lambda)) + geom_line()
+```
